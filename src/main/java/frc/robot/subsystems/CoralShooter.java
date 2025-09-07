@@ -32,10 +32,10 @@ public class CoralShooter extends SubsystemBase {
 
   }
 
-  public void shootAtSpeed(double speed){
-    topCoralMotor.set(speed-0.075);
-    leftCoralMotor.set(speed);
-    rightCoralMotor.set(-speed);
+  public void shootAtSpeed(double speedTop, double speedBL, double speedBR){
+    topCoralMotor.set(speedTop);
+    leftCoralMotor.set(speedBL);
+    rightCoralMotor.set(-speedBR);
 
   }
 

@@ -12,20 +12,26 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class shooterCommand extends Command {
   /** Creates a new shooterCommand. */
 
-  double speed;
+  double speedTop;
+  double speedL;
+  double speedR;
+
   CoralShooter s_CoralShooter;
 
-  public shooterCommand(CoralShooter s_CoralShooter, double speed) {
+  public shooterCommand(CoralShooter s_CoralShooter, double speedTop, double speedL, double speedR) {
     addRequirements(s_CoralShooter);
     this.s_CoralShooter = s_CoralShooter;
-    this.speed = speed;
+    this.speedTop = speedTop;
+    this.speedL = speedL;
+    this.speedR = speedR;
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    s_CoralShooter.shootAtSpeed(speed);
+    s_CoralShooter.shootAtSpeed(speedTop, speedL, speedR);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +41,7 @@ public class shooterCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    s_CoralShooter.shootAtSpeed(0);
+    s_CoralShooter.shootAtSpeed(0,0,0);
   }
 
   // Returns true when the command should end.

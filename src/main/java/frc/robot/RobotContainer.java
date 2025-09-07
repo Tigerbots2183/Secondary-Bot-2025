@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.DrivebaseConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.POSES;
 import frc.robot.Constants.StationPOSES;
@@ -28,12 +27,9 @@ import frc.robot.commands.indexCommand;
 import frc.robot.commands.AlignToPose;
 import frc.robot.commands.shooterCommand;
 import frc.robot.subsystems.QuestNavSubsystem;
-import frc.robot.subsystems.Touchboard.OneShotButton;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.subsystems.swervedrive.Vision;
 import frc.robot.subsystems.CoralIndexer;
 import frc.robot.subsystems.CoralShooter;
-import gg.questnav.questnav.QuestNav;
 
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -97,7 +93,11 @@ public class RobotContainer {
     private final OneShotButton PRBbtn = new OneShotButton("RBbtn",
             () -> new AlignToPose(StationPOSES.Right_bot_station, drivebase));
 
-    private final NumberComponent number = new NumberComponent("TestAdder");
+    private final NumberComponent topSpeed = new NumberComponent("top");
+    private final NumberComponent bLSpeed = new NumberComponent("bottomLeft");
+    private final NumberComponent bRSpeed = new NumberComponent("bottomRight");
+    private final NumberComponent indexerSpeed = new NumberComponent("indexSpeed");
+
     /**
      * Converts driver input into a field-relative ChassisSpeeds that is controlled
      * by angular velocity.
@@ -168,10 +168,9 @@ public class RobotContainer {
      */
     private void configureBindings() {
         
+        new ToggleButton("Shoot", ()-> new shooterCommand(coralShooter, topSpeed.getValue(), bLSpeed.getValue(), bRSpeed.getValue()));
 
-
-        number.setCommand(()-> new shooterCommand(coralShooter, number.getValue()));
-        new ActionButton("Intake", new indexCommand(coralIndexer,1));
+        new ActionButton("Index", ()-> new indexCommand(coralIndexer, indexerSpeed.getValue()));
 
 
         Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
