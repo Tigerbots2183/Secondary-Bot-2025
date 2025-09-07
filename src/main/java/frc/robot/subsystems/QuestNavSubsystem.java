@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
 import java.io.File;
 
 import edu.wpi.first.math.Matrix;
@@ -12,6 +13,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.VecBuilder;
 import gg.questnav.questnav.PoseFrame;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import gg.questnav.questnav.QuestNav;
 import swervelib.SwerveDrive;
 import frc.robot.RobotContainer;
@@ -19,20 +21,33 @@ import frc.robot.subsystems.swervedrive.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
+
 public class QuestNavSubsystem extends SubsystemBase {
   /** Creates a new QuestNavSubsystem. */
   SwerveSubsystem swerveSubsystem;
-  public QuestNavSubsystem(SwerveSubsystem swerveSubsystem) {
-    this.swerveSubsystem = swerveSubsystem;
-  }
 
   QuestNav questNav = new QuestNav();
+
+  // Assume this is the requested reset pose
+  Pose2d robotPose = Constants.QuestNavConstants.initalPose2d;
+
+  // Transform by the offset to get the Quest pose
+  Pose2d questPose = robotPose.transformBy(Constants.QuestNavConstants.ROBOT_TO_QUEST);
+
+  // Send the reset operation
+
+  public QuestNavSubsystem(SwerveSubsystem swerveSubsystem) {
+    this.swerveSubsystem = swerveSubsystem;
+    questNav.setPose(questPose);
+  }
+
+
+
 
   @Override
   public void periodic() {
     questNav.commandPeriodic();
-    
- 
+
     Matrix<N3, N1> QUESTNAV_STD_DEVS = VecBuilder.fill(
         0.02, // Trust down to 2cm in X direction
         0.02, // Trust down to 2cm in Y direction

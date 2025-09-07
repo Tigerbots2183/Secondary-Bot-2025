@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import frc.robot.subsystems.Touchboard.posePlotterUtil;
 import swervelib.math.Matter;
 
 /**
@@ -89,7 +90,7 @@ public final class Constants {
   }
 
   public static class QuestNavConstants {
-
+    public static final Pose2d initalPose2d = new Pose2d(0,0,Rotation2d.fromDegrees(180));
     public static final Transform2d ROBOT_TO_QUEST = new Transform2d(0,0,Rotation2d.fromDegrees(90));
   }
 }
