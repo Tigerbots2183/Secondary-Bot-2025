@@ -29,6 +29,7 @@ import frc.robot.commands.shooterCommand;
 import frc.robot.subsystems.QuestNavSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.CoralIndexer;
+import frc.robot.subsystems.CoralPivoter;
 import frc.robot.subsystems.CoralShooter;
 import frc.robot.subsystems.Intake;
 import static edu.wpi.first.units.Units.Degrees;
@@ -49,6 +50,8 @@ public class RobotContainer {
     // Subsystems
     private final CoralShooter coralShooter = new CoralShooter();
     private final CoralIndexer coralIndexer = new CoralIndexer();
+    private final CoralPivoter coralPivoter = new CoralPivoter();
+
     private final Intake intakePivotor = new Intake();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -100,6 +103,7 @@ public class RobotContainer {
     private final NumberComponent bRSpeed = new NumberComponent("bottomRight");
     private final NumberComponent indexerSpeed = new NumberComponent("indexSpeed");
     private final NumberComponent pivotAngle = new NumberComponent("pivotAngle");
+    private final NumberComponent coralAngle = new NumberComponent("coralAngle");
 
 
     /**
@@ -176,7 +180,9 @@ public class RobotContainer {
 
         new ActionButton("Index", ()-> new indexCommand(coralIndexer, indexerSpeed.getValue()));
 
-        new ActionButton("startPivotDeg", () -> intakePivotor.setAngle(Degrees.of(pivotAngle.getValue())));
+        new ActionButton("startPivotDeg", () -> intakePivotor.setAngleCommand(Degrees.of(pivotAngle.getValue())));
+
+        new ActionButton("startCoralDeg", () -> coralPivoter.setAngleCommand(Degrees.of(coralAngle.getValue())));
 
         Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
         Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
