@@ -30,6 +30,8 @@ import frc.robot.subsystems.QuestNavSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.CoralIndexer;
 import frc.robot.subsystems.CoralShooter;
+import frc.robot.subsystems.Intake;
+import static edu.wpi.first.units.Units.Degrees;
 
 import java.io.File;
 import swervelib.SwerveInputStream;
@@ -47,7 +49,7 @@ public class RobotContainer {
     // Subsystems
     private final CoralShooter coralShooter = new CoralShooter();
     private final CoralIndexer coralIndexer = new CoralIndexer();
-
+    private final Intake intakePivotor = new Intake();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -97,6 +99,8 @@ public class RobotContainer {
     private final NumberComponent bLSpeed = new NumberComponent("bottomLeft");
     private final NumberComponent bRSpeed = new NumberComponent("bottomRight");
     private final NumberComponent indexerSpeed = new NumberComponent("indexSpeed");
+    private final NumberComponent pivotAngle = new NumberComponent("pivotAngle");
+
 
     /**
      * Converts driver input into a field-relative ChassisSpeeds that is controlled
@@ -172,6 +176,7 @@ public class RobotContainer {
 
         new ActionButton("Index", ()-> new indexCommand(coralIndexer, indexerSpeed.getValue()));
 
+        new ActionButton("startPivotDeg", () -> intakePivotor.setAngle(Degrees.of(pivotAngle.getValue())));
 
         Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
         Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
