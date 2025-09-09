@@ -1,7 +1,7 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK Flex [42]": {
+      "SPARK Flex [41]": {
         "header": {
           "open": true
         }
@@ -27,6 +27,11 @@
         }
       },
       "SPARK MAX [2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [40]": {
         "header": {
           "open": true
         }
@@ -176,6 +181,21 @@
     }
   },
   "NetworkTables Info": {
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Touchboard@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
     "visible": true
   }
 }

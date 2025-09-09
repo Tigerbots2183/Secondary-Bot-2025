@@ -97,7 +97,10 @@ public class IntakePivoter extends SubsystemBase {
     return intakePivot.getAngle().in(Degrees);
   }
 
-  public Command setAngleCommand(Angle angle) {return intakePivot.setAngle(angle);}
+  public Command setAngleCommand(Angle angle) {return intakePivot.setAngle(angle).until(()->(getArmPosition() >= angle.in(Degrees)-1 && getArmPosition() <= angle.in(Degrees)+1));}
+
+  public void runAngleCommand(Angle angle) {intakePivot.setAngle(angle).schedule();}
+
 
   // public Command set(double speed){return intakePivot.set(speed);}
 

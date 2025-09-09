@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -25,10 +26,8 @@ import frc.robot.Constants.StationPOSES;
 import frc.robot.subsystems.Touchboard.*;
 import frc.robot.commands.indexCommand;
 import frc.robot.commands.AlignToPose;
-import frc.robot.commands.IntakePivotCommand;
 import frc.robot.commands.IntakeSpeedCommand;
 import frc.robot.commands.shooterCommand;
-import frc.robot.commands.shooterPivotCommand;
 import frc.robot.subsystems.QuestNavSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.CoralIndexer;
@@ -189,7 +188,7 @@ public class RobotContainer {
 
         new ActionButton("startCoralDeg", () -> coralPivoter.setAngleCommand(Degrees.of(coralAngle.getValue())));
 
-        new OneShotButton("Intake", ()->new IntakePivotCommand(intakePivotor, 0).andThen(new shooterPivotCommand(coralPivoter, 0)));//.andThen(new IntakeSpeedCommand(intakeSpeed, 1, 1)));
+        new OneShotButton("Intake", ()-> intakePivotor.setAngleCommand(Degrees.of(0)).andThen(coralPivoter.setAngleCommand(Degrees.of(0)).andThen(new IntakeSpeedCommand(intakeSpeed, 1, 1))));
 
         Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
         Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);

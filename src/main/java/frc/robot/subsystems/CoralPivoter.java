@@ -84,9 +84,12 @@ public class CoralPivoter extends SubsystemBase {
   private Arm coralPivot = new Arm(coralCfg);
 
   public Command setAngleCommand(Angle angle) {
-    return coralPivot.setAngle(angle);
+    return coralPivot.setAngle(angle).until(()->(getArmPosition() >= angle.in(Degrees)-5 && getArmPosition() <= angle.in(Degrees)+5));
   }
 
+  public void runAngleCommand(Angle angle) {
+    coralPivot.setAngle(angle).schedule();
+  }
   // public Command set(double speed){return intakePivot.set(speed);}
 
   public Command sysId() { return coralPivot.sysId(Volts.of(7), Volts.of(2).per(Second), Seconds.of(4));}
