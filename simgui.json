@@ -1,6 +1,11 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "SPARK Flex [42]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK Flex [51]": {
         "header": {
           "open": true

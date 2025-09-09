@@ -25,13 +25,18 @@ import frc.robot.Constants.StationPOSES;
 import frc.robot.subsystems.Touchboard.*;
 import frc.robot.commands.indexCommand;
 import frc.robot.commands.AlignToPose;
+import frc.robot.commands.IntakePivotCommand;
+import frc.robot.commands.IntakeSpeedCommand;
 import frc.robot.commands.shooterCommand;
+import frc.robot.commands.shooterPivotCommand;
 import frc.robot.subsystems.QuestNavSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.CoralIndexer;
 import frc.robot.subsystems.CoralPivoter;
 import frc.robot.subsystems.CoralShooter;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakePivoter;
+import frc.robot.subsystems.IntakeSpeed;
+
 import static edu.wpi.first.units.Units.Degrees;
 
 import java.io.File;
@@ -51,8 +56,8 @@ public class RobotContainer {
     private final CoralShooter coralShooter = new CoralShooter();
     private final CoralIndexer coralIndexer = new CoralIndexer();
     private final CoralPivoter coralPivoter = new CoralPivoter();
-
-    private final Intake intakePivotor = new Intake();
+    private final IntakeSpeed intakeSpeed = new IntakeSpeed();
+    private final IntakePivoter intakePivotor = new IntakePivoter();
 
     // Replace with CommandPS4Controller or CommandJoystick if needed
     final CommandXboxController driverXbox = new CommandXboxController(0);
@@ -183,6 +188,8 @@ public class RobotContainer {
         new ActionButton("startPivotDeg", () -> intakePivotor.setAngleCommand(Degrees.of(pivotAngle.getValue())));
 
         new ActionButton("startCoralDeg", () -> coralPivoter.setAngleCommand(Degrees.of(coralAngle.getValue())));
+
+        new OneShotButton("Intake", ()->new IntakePivotCommand(intakePivotor, 0).andThen(new shooterPivotCommand(coralPivoter, 0)));//.andThen(new IntakeSpeedCommand(intakeSpeed, 1, 1)));
 
         Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
         Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);

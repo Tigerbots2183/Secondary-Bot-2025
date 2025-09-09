@@ -4,11 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.commands.shooterCommand;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Degrees;
@@ -41,7 +46,7 @@ import yams.motorcontrollers.SmartMotorControllerConfig.TelemetryVerbosity;
 import yams.motorcontrollers.local.SparkWrapper;
 
 
-public class Intake extends SubsystemBase {
+public class IntakePivoter extends SubsystemBase {
   /** Creates a new Intake. */
 
   SparkMax intakePivoter = new SparkMax(40, MotorType.kBrushless);
@@ -84,10 +89,13 @@ public class Intake extends SubsystemBase {
 
   private Arm intakePivot = new Arm(armCfg);
 
-  public Intake() {
 
+  public IntakePivoter() {}
+
+
+  public double getArmPosition(){
+    return intakePivot.getAngle().in(Degrees);
   }
-
 
   public Command setAngleCommand(Angle angle) {return intakePivot.setAngle(angle);}
 

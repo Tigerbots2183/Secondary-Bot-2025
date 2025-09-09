@@ -94,6 +94,13 @@ public class CoralPivoter extends SubsystemBase {
 
   public CoralPivoter() {}
 
+
+
+  public double getArmPosition(){
+    return coralPivot.getAngle().in(Degrees);
+  }
+
+
   @Override
   public void periodic() {
     coralPivot.updateTelemetry();
