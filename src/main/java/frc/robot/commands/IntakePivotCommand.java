@@ -56,8 +56,7 @@ public class IntakePivotCommand extends Command {
 
       return angle + 1 > intakeP.getArmPosition();
     } else if (angle == 0) {
-      return false;
-      // return intakeP.getArmPosition() - 1 < 0 && intakeP.getArmPosition() + 1 > 0;
+      return intakeP.getArmPosition() - 1 < 0 && intakeP.getArmPosition() + 1 > 0;
     } else {
 
       return angle - 1 < intakeP.getArmPosition();
